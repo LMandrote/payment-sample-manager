@@ -34,6 +34,22 @@ const pagamentos = [
         valor: 4212.65,
         vencimento: new Date(2026, 7, 25),
         status: "Pendente",
+    },
+    {
+        cliente: "LH Financeira Ltda.",
+        fornecedor: "B4F Contabilidade",
+        invoice: "1776",
+        valor: 12650.90,
+        vencimento: new Date(2026, 7, 25),
+        status: "Pago",
+    },
+    {
+        cliente: "Mercado 3 irmãos",
+        fornecedor: "Crystal Produtos",
+        invoice: "chff22",
+        valor: 200.00,
+        vencimento: new Date(2026, 8, 2),
+        status: "Pendente",
     }
 ];   
 
@@ -56,20 +72,20 @@ for(let i = 0; i < pagamentos.length; i++) {
     console.log("Status: ", pagamentos[i].status);
     console.log("Valor: ", pagamentos[i].valor);
 
+    valorTotal = valorTotal + pagamentos[i].valor;
+
     if (pagamentos[i].status === "Pendente") {
         pendentes++;
-        valorTotal = valorTotal + pagamentos[i].valor;
-        valorPendente = pagamentos[i].valor;
+        valorPendente = valorPendente + pagamentos[i].valor;
 
     } else if (pagamentos[i].status === "Agendado") {
         agendados++;
-        valorTotal = valorTotal + pagamentos[i].valor;
-        valorAgendado = pagamentos[i].valor;
+        valorAgendado = valorAgendado + pagamentos[i].valor;
 
-    } else { 
+    } else if (pagamentos[i].status === "Pago") {
         pagos++;
-        valorTotal = valorTotal + pagamentos[i].valor;
-        valorPago = pagamentos[i].valor;
+        valorPago = valorPago + pagamentos[i].valor;
+
     }
 
 }
