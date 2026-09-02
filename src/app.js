@@ -1,15 +1,16 @@
-//Criando um objeto
-const pagamento = {
-    cliente: "Alpha Tech Ltda",
-    fornecedor: "Adecco",
-    invoice: "254",
-    valor: 5400.50,
-    vencimento: new Date(2026, 7, 26),
-    status: "Pago",
-}
-//console.log(pagamento);
 
-//Criando um array
+//Cria um formatador de moeda no padrão brasileiro
+//Os valores continuam sendo números; a formatação só acontece na exibição!
+const formatadorMoeda = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+});
+
+//Cria um formatador para exibir objetos Date no padrão brasileiro.
+const formatadorData = new Intl.DateTimeFormat("pt-BR");
+
+//Lista da pagamentos fictícios.
+//Cada pagamento é representado por um objeto com suas propriedades. 
 const pagamentos = [
     {
         cliente: "Argo Sementes Ltda",
@@ -53,27 +54,29 @@ const pagamentos = [
     }
 ];   
 
-//Monstrando no terminal informações dos objetos inseridos dentro do Array
-//console.log(pagamentos[2].cliente);
-//console.log(pagamentos[0].valor);
-//console.log(pagamentos.length);
-
+//Contadores: armazenam a quantidade de pagamentos por status.
 let pendentes = 0;
 let agendados = 0;
 let pagos = 0;
+//Acumuladores: armazenam a soma dos valores dos pagamentos.
 let valorTotal = 0;
 let valorPendente = 0;
 let valorAgendado = 0;
 let valorPago = 0;
 
-//Percorrendo os Arrays
+//Percorrendo todos os pagamentos do Array.
+//"i" representa o índice do pagamento atual.
 for(let i = 0; i < pagamentos.length; i++) {
     console.log("Cliente: ", pagamentos[i].cliente);
     console.log("Status: ", pagamentos[i].status);
-    console.log("Valor: ", pagamentos[i].valor);
+    console.log("Valor: ", formatadorMoeda.format(pagamentos[i].valor));
+    console.log("Vencimento: ", formatadorData.format(pagamentos[i].vencimento));
 
+    //Soma o valor do pagamento atual ao total geral.
     valorTotal = valorTotal + pagamentos[i].valor;
 
+    //Verifica o status do pagamento atual.
+    //Além de contar os pagamentos, acumula o valor de cada categoria.
     if (pagamentos[i].status === "Pendente") {
         pendentes++;
         valorPendente = valorPendente + pagamentos[i].valor;
@@ -89,11 +92,11 @@ for(let i = 0; i < pagamentos.length; i++) {
     }
 
 }
-    console.log("Pagamentos pendentes: ", pendentes, "| R$ ", valorPendente);
-    console.log("Pagamentos Agendados: ", agendados, "| R$ ", valorAgendado);
-    console.log("Pagamentos Pagos: ", pagos, "| R$ ", valorPago);
-
-    console.log("Valor total: ", valorTotal);
+    //Exibe o resumo após todos os pagamentos terem sido processados.
+    console.log("Pagamentos pendentes: ", pendentes, "|", formatadorMoeda.format(valorPendente));
+    console.log("Pagamentos Agendados: ", agendados, "|", formatadorMoeda.format(valorAgendado));
+    console.log("Pagamentos Pagos: ", pagos, "|", formatadorMoeda.format(valorPago));
+    console.log("Valor total: ", formatadorMoeda.format(valorTotal));
 
 
 
